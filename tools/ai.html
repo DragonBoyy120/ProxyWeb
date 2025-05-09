@@ -1,401 +1,1159 @@
 <!DOCTYPE html>
+
 <html lang="en">
+
 <head>
+
     <meta charset="UTF-8" />
+
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+
     <title>ProxyWeb - AI</title>
+
     <link rel="stylesheet" href="../style.css" /> 
+
     <script src="../script.js"></script>
+
     <link rel="icon" href="../src/favicon.ico" type="image/x-icon" />
+
 </head>
+
 <body>
+
     <header>
+
         <div class="hamburger" id="hamburger" aria-label="Menu" role="button" tabindex="0">
+
             <span></span>
+
             <span></span>
+
             <span></span>
+
         </div>
+
         <h1>Power Full AI's</h1>
+
     </header>
+
     <style>
 
 
+
+
+
 /* Reset and base styles */
+
 * {
+
     box-sizing: border-box;
+
 }
+
+
 
 body {
+
     font-family: Arial, sans-serif;
+
     margin: 0;
+
     padding: 0;
+
     background-color: #000;
+
     color: #fff;
+
     -webkit-font-smoothing: antialiased;
+
     -moz-osx-font-smoothing: grayscale;
+
     user-select: none;
+
 }
+
+
 
 /* Header top bar */
+
 header {
+
     position: fixed;
+
     top: 0;
+
     left: 0;
+
     right: 0;
+
     height: 50px;
+
     background: rgba(0, 0, 0, 0.75);
+
     display: flex;
+
     align-items: center;
+
     padding: 0 15px;
+
     z-index: 1001;
+
     box-shadow: 0 0 15px cyan;
+
     gap: 20px;
+
 }
+
+
 
 /* Hamburger icon with gradient lines */
+
 .hamburger {
+
     width: 28px;
+
     height: 22px;
+
     display: flex;
+
     flex-direction: column;
+
     justify-content: space-between;
+
     cursor: pointer;
+
     flex-shrink: 0;
+
 }
+
+
 
 .hamburger span {
+
     display: block;
+
     height: 3px;
+
     border-radius: 3px;
+
     background: linear-gradient(90deg, #00f0ff, #00cfff, #00e2ca, #00ffd5);
+
     box-shadow: 0 0 8px cyan;
+
     transition: background 0.5s ease, box-shadow 0.5s ease, transform 0.3s ease;
+
 }
+
+
 
 /* Hover effect for hamburger lines */
+
 .hamburger:hover span {
+
     background: linear-gradient(90deg, #00ff77, #00ffaa, #00cc88, #00ff99);
+
     box-shadow: 0 0 15px #00ffcc;
+
 }
+
+
 
 /* Toggle hamburger animation to cross */
+
 .hamburger.active span:nth-child(1) {
+
     transform: translateY(9px) rotate(45deg);
+
 }
+
+
 
 .hamburger.active span:nth-child(2) {
+
     opacity: 0;
+
     pointer-events: none;
+
 }
+
+
 
 .hamburger.active span:nth-child(3) {
+
     transform: translateY(-9px) rotate(-45deg);
+
 }
+
+
 
 /* Header title */
+
 header h1 {
+
     margin: 0;
+
     font-weight: 700;
+
     font-size: 1.6rem;
+
     letter-spacing: 1.5px;
+
     color: #0ff; /* cyan */
+
     user-select: none;
+
 }
+
+
 
 /* Side menu container */
+
 nav.side-menu {
+
     position: fixed;
+
     top: 50px;
+
     left: -270px;
+
     width: 270px;
+
     height: calc(100% - 50px);
+
     background: linear-gradient(135deg, #0a0f12, #12343b, #0a191d);
+
     color: white;
+
     padding: 15px;
+
     box-shadow: 3px 0 15px rgba(0, 255, 255, 0.7);
+
     transition: left 0.35s cubic-bezier(.77, 0, .175, 1);
+
     overflow-y: auto;
+
     z-index: 1000;
+
     border-radius: 0 15px 15px 0;
+
     backdrop-filter: saturate(180%) blur(12px);
+
 }
+
+
 
 /* Side menu open state */
+
 nav.side-menu.open {
+
     left: 0;
+
 }
+
+
 
 /* Navigation links */
+
 nav.side-menu a,
+
 nav.side-menu button {
+
     display: block;
+
     text-decoration: none;
+
     color: #80ffff;
+
     padding: 14px 14px;
+
     font-weight: 700;
+
     border: none;
+
     background: transparent;
+
     width: 100%;
+
     text-align: left;
+
     cursor: pointer;
+
     font-size: 16px;
+
     border-radius: 8px;
+
     user-select: none;
+
     box-shadow: 0 0 7px transparent;
+
     transition: color 0.3s ease, box-shadow 0.3s ease;
+
 }
+
+
 
 nav.side-menu a:hover,
+
 nav.side-menu button:hover {
+
     color: #00fff9;
+
     box-shadow: 0 0 10px #00fff9, 0 0 20px #00fff9b0;
+
     background: rgba(0, 255, 255, 0.1);
+
 }
+
+
 
 /* Dropdown content */
+
 .dropdown-content {
+
     max-height: 0;
+
     overflow: hidden;
+
     transition: max-height 0.4s ease, opacity 0.35s ease;
+
     padding-left: 14px;
+
     opacity: 0;
+
     margin-top: 0;
+
     user-select: none;
+
 }
+
+
 
 .dropdown-content.open {
+
     max-height: 420px;
+
     opacity: 1;
+
     margin-top: 8px;
+
 }
+
+
 
 .dropdown-content a {
+
     padding-left: 26px;
+
     font-weight: 600;
+
     font-size: 15px;
+
     color: #70faff;
+
     text-shadow: 0 0 3px #0ff;
+
     user-select: none;
+
     border-radius: 6px;
+
     margin-bottom: 6px;
+
     box-shadow: 0 0 8px transparent;
+
     transition: box-shadow 0.25s ease;
+
 }
+
+
 
 .dropdown-content a:hover {
+
     color: #00f4ff;
+
     box-shadow: 0 0 15px cyan, 0 0 25px #00f4ffc0;
+
     background: rgba(0, 255, 255, 0.12);
+
 }
+
+
 
 /* AI Container grid */
+
 .ai-container {
+
     max-width: 1200px;
+
     margin: 20px auto 40px;
+
     display: grid;
+
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+
     gap: 24px;
+
     padding: 0 20px;
+
     user-select: none;
+
 }
+
+
 
 /* AI box style */
+
 .ai-box {
+
     background-color: #111;
+
     border-radius: 12px;
+
     box-shadow: 0 0 12px rgba(0, 255, 255, 0.2);
+
     padding: 20px;
+
     color: #e0f8ff;
+
     position: relative;
+
     display: flex;
+
     flex-direction: column;
+
     justify-content: space-between;
+
     transition: box-shadow 0.4s ease, transform 0.3s ease;
+
     cursor: pointer;
+
     outline: none;
+
 }
+
+
 
 .ai-box:hover,
+
 .ai-box:focus {
+
     box-shadow:
+
         0 0 12px 2px #0ff,
+
         0 0 24px 6px #00ffffcc,
+
         0 0 32px 10px #00ffff88;
+
     transform: translateY(-6px);
+
 }
+
+
 
 /* Animated gradient text effect for heading */
+
 .ai-box h2 {
+
     font-weight: 800;
+
     font-size: 1.35rem;
+
     background: linear-gradient(270deg, #0ff, #a6ffff, #0ff);
+
     background-size: 600% 600%;
+
     /* -webkit-background-clip: text; */
+
     -webkit-text-fill-color: transparent;
+
     animation: textGlowAnim 8s ease infinite;
+
     margin-bottom: 12px;
+
 }
+
+
 
 @keyframes textGlowAnim {
+
     0%, 100% {
+
         background-position: 0% 50%;
+
         -webkit-text-fill-color: transparent;
+
         text-shadow:
+
             0 0 3px #0ff,
+
             0 0 7px #0ff;
+
     }
+
     50% {
+
         background-position: 100% 50%;
+
         -webkit-text-fill-color: transparent;
+
         text-shadow:
+
             0 0 10px #8ff,
+
             0 0 20px #0ff;
+
     }
+
 }
+
+
 
 /* Description */
+
 .ai-box p {
+
     flex-grow: 1;
+
     font-size: 0.95rem;
+
     line-height: 1.3;
+
     color: #c0f0ffcc;
+
 }
+
+
 
 /* Visit button */
+
 .visit-btn {
+
     margin-top: 16px;
+
     align-self: flex-end;
+
     background: linear-gradient(90deg, #00ffff, #0099cc);
+
     color: #000;
+
     text-decoration: none;
+
     font-weight: 700;
+
     padding: 10px 16px;
+
     border-radius: 8px;
+
     transition: background 0.4s ease, color 0.3s ease;
+
     box-shadow: 0 4px 8px rgba(0, 255, 255, 0.3);
+
     user-select: none;
+
 }
+
+
 
 .visit-btn:hover,
+
 .visit-btn:focus {
+
     background: linear-gradient(90deg, #00cccc, #66ffff);
+
     color: #000;
+
     outline: none;
+
 }
+
+
 
 /* Responsive tweaks */
+
 @media (max-width: 600px) {
+
     .ai-container {
+
         grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+
         gap: 16px;
+
         padding: 10px;
+
     }
+
     header h1 {
+
         font-size: 1.3rem;
+
     }
+
 }
 
+
+
 /* Accessibility focus */
+
 .ai-box:focus-visible {
+
     outline: 2px solid #0ff;
+
     outline-offset: 3px;
+
 }
+
+
+
 
 
 </style>
 
+
+
     <nav class="side-menu" id="sideMenu" aria-label="Side navigation menu" aria-hidden="true">
+
         <a href="index.html" class="menu-item" tabindex="0" id="homeBtn">Home</a>
+
         <button class="menu-item dropdown-btn" id="toolsBtn" aria-expanded="false" aria-controls="toolsDropdown">Tools ▼</button>
+
         <div class="dropdown-content" id="toolsDropdown" hidden>
+
             <a href="tools/developers.html" class="menu-item" tabindex="0" id="developersBtn">Developers</a>
+
             <a href="tools/calculator.html" tabindex="0">Advance Calculator</a>
+
             <a href="tools/timetable-gen.html" tabindex="0">Timetable-gen</a>
+
             <a href="tools/paper-gen.html" tabindex="0">Paper gen</a>
+
             <a href="tools/ai.html" tabindex="0">Useful AI</a>
+
             <a href="tools/bmi.html" tabindex="0">BMI Calculator</a>
+
             <a href="tools/bgr.html" tabindex="0">Background Remove</a>
+
         </div>
+
     </nav>
 
+
+
     <main>
+
         <div class="ai-container">
-            <div class="ai-box" tabindex="0">
-                <h2>ChatGPT</h2>
-                <p>A conversational AI that can assist with various queries and tasks.</p>
-                <a href="https://chat.openai.com" target="_blank" rel="noopener" class="visit-btn">Visit >></a>
-            </div>
-            <div class="ai-box" tabindex="0">
-                <h2>Blackbox AI</h2>
-                <p>AI-powered code completion and suggestions for developers.</p>
-                <a href="https://blackbox.ai" target="_blank" rel="noopener" class="visit-btn">Visit >></a>
-            </div>
-            <div class="ai-box" tabindex="0">
-                <h2>DeepSeek</h2>
-                <p>AI tool for deep learning and data analysis.</p>
-                <a href="https://deepseek.ai" target="_blank" rel="noopener" class="visit-btn">Visit >></a>
-            </div>
-            <div class="ai-box" tabindex="0">
-                <h2>Geminilama</h2>
-                <p>AI for generating and summarizing text content.</p>
-                <a href="https://geminilama.com" target="_blank" rel="noopener" class="visit-btn">Visit >></a>
-            </div>
-            <div class="ai-box" tabindex="0">
-                <h2>Remove.bg</h2>
-                <p>AI tool for removing backgrounds from images.</p>
-                <a href="https://remove.bg" target="_blank" rel="noopener" class="visit-btn">Visit >></a>
-            </div>
-            <div class="ai-box" tabindex="0">
-                <h2>Canva AI</h2>
-                <p>AI-powered design tool for creating stunning graphics.</p>
-                <a href="https://www.canva.com" target="_blank" rel="noopener" class="visit-btn">Visit >></a>
-            </div>
-            <div class="ai-box" tabindex="0">
-                <h2>Jasper AI</h2>
-                <p>AI writing assistant for creating content quickly.</p>
-                <a href="https://www.jasper.ai" target="_blank" rel="noopener" class="visit-btn">Visit >></a>
-            </div>
-            <div class="ai-box" tabindex="0">
-                <h2>Copy.ai</h2>
-                <p>AI tool for generating marketing copy and content.</p>
-                <a href="https://www.copy.ai" target="_blank" rel="noopener" class="visit-btn">Visit >></a>
-            </div>
-            <div class="ai-box" tabindex="0">
-                <h2>Runway ML</h2>
-                <p>AI for video editing and content creation.</p>
-                <a href="https://runwayml.com" target="_blank" rel="noopener" class="visit-btn">Visit >></a>
-            </div>
-            <div class="ai-box" tabindex="0">
-                <h2>Writesonic</h2>
-                <p>AI writing tool for generating articles and blog posts.</p>
-                <a href="https://writesonic.com" target="_blank" rel="noopener" class="visit-btn">Visit >></a>
-            </div>
-            <div class="ai-box" tabindex="0">
-                <h2>Designify</h2>
-                <p>AI tool for enhancing and designing images automatically.</p>
-                <a href="https://designify.com" target="_blank" rel="noopener" class="visit-btn">Visit >></a>
-            </div>
-            <div class="ai-box" tabindex="0">
-                <h2>Speechify</h2>
-                <p>AI tool for converting text to speech with natural voices.</p>
-                <a href="https://speechify.com" target="_blank" rel="noopener" class="visit-btn">Visit >></a>
-            </div>
-            <div class="ai-box" tabindex="0">
-                <h2>AI Dungeon</h2>
-                <p>Interactive storytelling AI that creates adventures on the fly.</p>
-                <a href="https://play.aidungeon.io" target="_blank" rel="noopener" class="visit-btn">Visit >></a>
-            </div>
-            <div class="ai-box" tabindex="0">
-                <h2>PhotoRoom</h2>
-                <p>AI tool for creating professional product photos.</p>
-                <a href="https://photoroom.com" target="_blank" rel="noopener" class="visit-btn">Visit >></a>
-            </div>
-        </div>
-    </main>
 
-    <script src="ai.js"></script>
-</body>
-</html>
-</content>
+            <div class="ai-box" tabindex="0">
 
-</create_file>
+  <h2>ChatGPT</h2>
+
+  <p>A conversational AI that can assist with various queries and tasks.</p>
+
+  <a href="https://chat.openai.com" target="_blank" rel="noopener" class="visit-btn">Visit >></a>
+
+</div>
+
+<div class="ai-box" tabindex="0">
+
+  <h2>Blackbox AI</h2>
+
+  <p>AI-powered code completion and suggestions for developers.</p>
+
+  <a href="https://blackbox.ai" target="_blank" rel="noopener" class="visit-btn">Visit >></a>
+
+</div>
+
+<div class="ai-box" tabindex="0">
+
+  <h2>DeepSeek</h2>
+
+  <p>AI tool for deep learning and data analysis.</p>
+
+  <a href="https://deepseek.com" target="_blank" rel="noopener" class="visit-btn">Visit >></a>
+
+</div>
+
+<div class="ai-box" tabindex="0">
+
+  <h2>Geminilama</h2>
+
+  <p>AI for generating and summarizing text content.</p>
+
+  <a href="https://geminilama.com" target="_blank" rel="noopener" class="visit-btn">Visit >></a>
+
+</div>
+
+<div class="ai-box" tabindex="0">
+
+  <h2>Remove.bg</h2>
+
+  <p>AI tool for removing backgrounds from images.</p>
+
+  <a href="https://remove.bg" target="_blank" rel="noopener" class="visit-btn">Visit >></a>
+
+</div>
+
+<div class="ai-box" tabindex="0">
+
+  <h2>Canva AI</h2>
+
+  <p>AI-powered design tool for creating stunning graphics.</p>
+
+  <a href="https://www.canva.com" target="_blank" rel="noopener" class="visit-btn">Visit >></a>
+
+</div>
+
+<div class="ai-box" tabindex="0">
+
+  <h2>Jasper AI</h2>
+
+  <p>AI writing assistant for creating content quickly.</p>
+
+  <a href="https://www.jasper.ai" target="_blank" rel="noopener" class="visit-btn">Visit >></a>
+
+</div>
+
+<div class="ai-box" tabindex="0">
+
+  <h2>Copy.ai</h2>
+
+  <p>AI tool for generating marketing copy and content.</p>
+
+  <a href="https://www.copy.ai" target="_blank" rel="noopener" class="visit-btn">Visit >></a>
+
+</div>
+
+<div class="ai-box" tabindex="0">
+
+  <h2>Runway ML</h2>
+
+  <p>AI for video editing and content creation.</p>
+
+  <a href="https://runwayml.com" target="_blank" rel="noopener" class="visit-btn">Visit >></a>
+
+</div>
+
+<div class="ai-box" tabindex="0">
+
+  <h2>Writesonic</h2>
+
+  <p>AI writing tool for generating articles and blog posts.</p>
+
+  <a href="https://writesonic.com" target="_blank" rel="noopener" class="visit-btn">Visit >></a>
+
+</div>
+
+<div class="ai-box" tabindex="0">
+
+  <h2>Designify</h2>
+
+  <p>AI tool for enhancing and designing images automatically.</p>
+
+  <a href="https://designify.com" target="_blank" rel="noopener" class="visit-btn">Visit >></a>
+
+</div>
+
+<div class="ai-box" tabindex="0">
+
+  <h2>Speechify</h2>
+
+  <p>AI tool for converting text to speech with natural voices.</p>
+
+  <a href="https://speechify.com" target="_blank" rel="noopener" class="visit-btn">Visit >></a>
+
+</div>
+
+<div class="ai-box" tabindex="0">
+
+  <h2>AI Dungeon</h2>
+
+  <p>Interactive storytelling AI that creates adventures on the fly.</p>
+
+  <a href="https://play.aidungeon.io" target="_blank" rel="noopener" class="visit-btn">Visit >></a>
+
+</div>
+
+<div class="ai-box" tabindex="0">
+
+  <h2>PhotoRoom</h2>
+
+  <p>AI tool for creating professional product photos.</p>
+
+  <a href="https://photoroom.com" target="_blank" rel="noopener" class="visit-btn">Visit >></a>
+
+</div>
+
+<!-- New entries begin -->
+
+<div class="ai-box" tabindex="0">
+
+  <h2>Claude AI</h2>
+
+  <p>A conversational AI developed by Anthropic focused on ethical responses.</p>
+
+  <a href="https://claude.ai" target="_blank" rel="noopener" class="visit-btn">Visit >></a>
+
+</div>
+
+<div class="ai-box" tabindex="0">
+
+  <h2>Perplexity AI</h2>
+
+  <p>An AI search engine that gives cited, factual answers in real time.</p>
+
+  <a href="https://www.perplexity.ai" target="_blank" rel="noopener" class="visit-btn">Visit >></a>
+
+</div>
+
+<div class="ai-box" tabindex="0">
+
+  <h2>Midjourney</h2>
+
+  <p>AI image generator that creates art from text prompts.</p>
+
+  <a href="https://midjourney.com" target="_blank" rel="noopener" class="visit-btn">Visit >></a>
+
+</div>
+
+<div class="ai-box" tabindex="0">
+
+  <h2>Stable Diffusion</h2>
+
+  <p>Open-source image generation model used in many creative tools.</p>
+
+  <a href="https://stability.ai" target="_blank" rel="noopener" class="visit-btn">Visit >></a>
+
+</div>
+
+<div class="ai-box" tabindex="0">
+
+  <h2>Leonardo AI</h2>
+
+  <p>Image generation platform designed for game assets and characters.</p>
+
+  <a href="https://leonardo.ai" target="_blank" rel="noopener" class="visit-btn">Visit >></a>
+
+</div>
+
+<div class="ai-box" tabindex="0">
+
+  <h2>Gamma AI</h2>
+
+  <p>Create stunning presentations and documents with AI help.</p>
+
+  <a href="https://gamma.app" target="_blank" rel="noopener" class="visit-btn">Visit >></a>
+
+</div>
+
+<div class="ai-box" tabindex="0">
+
+  <h2>MagicSchool AI</h2>
+
+  <p>AI designed to help teachers with lesson planning and grading.</p>
+
+  <a href="https://magicschool.ai" target="_blank" rel="noopener" class="visit-btn">Visit >></a>
+
+</div>
+
+<div class="ai-box" tabindex="0">
+
+  <h2>Eduaide AI</h2>
+
+  <p>AI assistant for teachers, offering support for classroom tasks.</p>
+
+  <a href="https://eduaide.ai" target="_blank" rel="noopener" class="visit-btn">Visit >></a>
+
+</div>
+
+<div class="ai-box" tabindex="0">
+
+  <h2>Khanmigo</h2>
+
+  <p>Khan Academy’s AI tutor for helping students learn more effectively.</p>
+
+  <a href="https://www.khanacademy.org/khan-labs" target="_blank" rel="noopener" class="visit-btn">Visit >></a>
+
+</div>
+
+<div class="ai-box" tabindex="0">
+
+  <h2>Quillbot</h2>
+
+  <p>AI tool for rewriting, summarizing, and improving grammar in text.</p>
+
+  <a href="https://quillbot.com" target="_blank" rel="noopener" class="visit-btn">Visit >></a>
+
+</div>
+
+<div class="ai-box" tabindex="0">
+
+  <h2>Socratic by Google</h2>
+
+  <p>Helps students solve homework problems with AI explanations.</p>
+
+  <a href="https://socratic.org" target="_blank" rel="noopener" class="visit-btn">Visit >></a>
+
+</div>
+
+<div class="ai-box" tabindex="0">
+
+  <h2>Grammarly</h2>
+
+  <p>AI assistant for grammar checking, tone, and clarity enhancements.</p>
+
+  <a href="https://grammarly.com" target="_blank" rel="noopener" class="visit-btn">Visit >></a>
+
+</div>
+
+<div class="ai-box" tabindex="0">
+
+  <h2>GitHub Copilot</h2>
+
+  <p>AI pair programmer that suggests code in real time for developers.</p>
+
+  <a href="https://github.com/features/copilot" target="_blank" rel="noopener" class="visit-btn">Visit >></a>
+
+</div>
+
+<div class="ai-box" tabindex="0">
+
+  <h2>Codeium</h2>
+
+  <p>Free AI coding assistant for auto-completing code and debugging.</p>
+
+  <a href="https://codeium.com" target="_blank" rel="noopener" class="visit-btn">Visit >></a>
+
+</div>
+
+<div class="ai-box" tabindex="0">
+
+  <h2>Tabnine</h2>
+
+  <p>AI code completion tool compatible with most IDEs.</p>
+
+  <a href="https://www.tabnine.com" target="_blank" rel="noopener" class="visit-btn">Visit >></a>
+
+</div>
+
+<div class="ai-box" tabindex="0">
+
+  <h2>Notion AI</h2>
+
+  <p>Boost your productivity by summarizing and generating content in Notion.</p>
+
+  <a href="https://notion.so/product/ai" target="_blank" rel="noopener" class="visit-btn">Visit >></a>
+
+</div>
+
+<div class="ai-box" tabindex="0">
+
+  <h2>Descript</h2>
+
+  <p>AI tool for editing podcasts, videos, and transcriptions.</p>
+
+  <a href="https://www.descript.com" target="_blank" rel="noopener" class="visit-btn">Visit >></a>
+
+</div>
+
+<div class="ai-box" tabindex="0">
+
+  <h2>ElevenLabs</h2>
+
+  <p>Advanced voice AI that generates high-quality synthetic speech.</p>
+
+  <a href="https://www.elevenlabs.io" target="_blank" rel="noopener" class="visit-btn">Visit >></a>
+
+</div>
+
+<div class="ai-box" tabindex="0">
+
+  <h2>Durable AI</h2>
+
+  <p>AI website builder that creates a full site in seconds.</p>
+
+  <a href="https://durable.co" target="_blank" rel="noopener" class="visit-btn">Visit >></a>
+
+</div>
+
+<div class="ai-box" tabindex="0">
+
+  <h2>Lumen5</h2>
+
+  <p>Transform articles and blog posts into engaging videos with AI.</p>
+
+  <a href="https://lumen5.com" target="_blank" rel="noopener" class="visit-btn">Visit >></a>
+
+      </div>
+
+            <div class="ai-box" tabindex="0">
+
+  <h2>ChatGPT</h2>
+
+  <p>A conversational AI that can assist with various queries and tasks.</p>
+
+  <a href="https://chat.openai.com" target="_blank" rel="noopener" class="visit-btn">Visit >></a>
+
+</div>
+
+<div class="ai-box" tabindex="0">
+
+  <h2>Blackbox AI</h2>
+
+  <p>AI-powered code completion and suggestions for developers.</p>
+
+  <a href="https://blackbox.ai" target="_blank" rel="noopener" class="visit-btn">Visit >></a>
+
+</div>
+
+<div class="ai-box" tabindex="0">
+
+  <h2>DeepSeek</h2>
+
+  <p>AI tool for deep learning and data analysis.</p>
+
+  <a href="https://deepseek.com" target="_blank" rel="noopener" class="visit-btn">Visit >></a>
+
+</div>
+
+<div class="ai-box" tabindex="0">
+
+  <h2>Geminilama</h2>
+
+  <p>AI for generating and summarizing text content.</p>
+
+  <a href="https://geminilama.com" target="_blank" rel="noopener" class="visit-btn">Visit >></a>
+
+</div>
+
+<div class="ai-box" tabindex="0">
+
+  <h2>Remove.bg</h2>
+
+  <p>AI tool for removing backgrounds from images.</p>
+
+  <a href="https://remove.bg" target="_blank" rel="noopener" class="visit-btn">Visit >></a>
+
+</div>
+
+<div class="ai-box" tabindex="0">
+
+  <h2>Canva AI</h2>
+
+  <p>AI-powered design tool for creating stunning graphics.</p>
+
+  <a href="https://www.canva.com" target="_blank" rel="noopener" class="visit-btn">Visit >></a>
+
+</div>
+
+<div class="ai-box" tabindex="0">
+
+  <h2>Jasper AI</h2>
+
+  <p>AI writing assistant for creating content quickly.</p>
+
+  <a href="https://www.jasper.ai" target="_blank" rel="noopener" class="visit-btn">Visit >></a>
+
+</div>
+
+<div class="ai-box" tabindex="0">
+
+  <h2>Copy.ai</h2>
+
+  <p>AI tool for generating marketing copy and content.</p>
+
+  <a href="https://www.copy.ai" target="_blank" rel="noopener" class="visit-btn">Visit >></a>
+
+</div>
+
+<div class="ai-box" tabindex="0">
+
+  <h2>Runway ML</h2>
+
+  <p>AI for video editing and content creation.</p>
+
+  <a href="https://runwayml.com" target="_blank" rel="noopener" class="visit-btn">Visit >></a>
+
+</div>
+
+<div class="ai-box" tabindex="0">
+
+  <h2>Writesonic</h2>
+
+  <p>AI writing tool for generating articles and blog posts.</p>
+
+  <a href="https://writesonic.com" target="_blank" rel="noopener" class="visit-btn">Visit >></a>
+
+</div>
+
+<div class="ai-box" tabindex="0">
+
+  <h2>Designify</h2>
+
+  <p>AI tool for enhancing and designing images automatically.</p>
+
+  <a href="https://designify.com" target="_blank" rel="noopener" class="visit-btn">Visit >></a>
+
+</div>
+
+<div class="ai-box" tabindex="0">
+
+  <h2>Speechify</h2>
+
+  <p>AI tool for converting text to speech with natural voices.</p>
+
+  <a href="https://speechify.com" target="_blank" rel="noopener" class="visit-btn">Visit >></a>
+
+</div>
+
+<div class="ai-box" tabindex="0">
+
+  <h2>AI Dungeon</h2>
+
+  <p>Interactive storytelling AI that creates adventures on the fly.</p>
+
+  <a href="https://play.aidungeon.io" target="_blank" rel="noopener" class="visit-btn">Visit >></a>
+
+</div>
+
+<div class="ai-box" tabindex="0">
+
+  <h2>PhotoRoom</h2>
+
+  <p>AI tool for creating professional product photos.</p>
+
+  <a href="https://photoroom.com" target="_blank" rel="noopener" class="visit-btn">Visit >></a>
+
+</div>
+
+<!-- New entries begin -->
+
+<div class="ai-box" tabindex="0">
+
+  <h2>Claude AI</h2>
+
+  <p>A conversational AI developed by Anthropic focused on ethical responses.</p>
+
+  <a href="https://claude.ai" target="_blank" rel="noopener" class="visit-btn">Visit >></a>
+
+</div>
+
+<div class="ai-box" tabindex="0">
+
+  <h2>Perplexity AI</h2>
+
+  <p>An AI search engine that gives cited, factual answers in real time.</p>
+
+  <a href="https://www.perplexity.ai" target="_blank" rel="noopener" class="visit-btn">Visit >></a>
+
+</div>
+
+<div class="ai-box" tabindex="0">
+
+  <h2>Midjourney</h2>
+
+  <p>AI image generator that creates art from text prompts.</p>
+
+  <a href="https://midjourney.com" target="_blank" rel="noopener" class="visit-btn">Visit >></a>
+
+</div>
+
+<div class="ai-bo
