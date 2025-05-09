@@ -9,7 +9,7 @@
 </head>
 <body>
     <header>
-        <h1>BMI Calculator</h1>
+        <h2>BMI Calculator</h2>
 
           
         <div class="hamburger" id="hamburger" aria-label="Menu" role="button" tabindex="0">
@@ -47,7 +47,7 @@
             <div id="result" class="result"></div>
             <div id="tips" class="tips"></div>
 
-            <button id="homeBtn" class="home-button">Home</button> <!-- Home button -->
+            <button id="homeBtn" src="../index.html" class="home-button">Home</button> <!-- Home button -->
         </div>
     </main>
 <style>
@@ -67,6 +67,18 @@ body {
     height: 100vh;
     max-width: 100vw;
 }
+    h2{
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(-45deg, #0f2027, #203a43, #2c5364, #1f4037);
+    background-size: 400% 400%;
+    animation: bgGradient 15s ease infinite;
+    color: white;
+    overflow-x: hidden;
+    height: 100vh;
+    max-width: 100vw;
+        
+    }
 
 /* Background gradient animation */
 @keyframes bgGradient {
