@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>School Timetable Generator</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; }
+    .container { display: flex; flex-direction: column; gap: 20px; }
+    input, select, button { margin: 5px 0; padding: 5px; }
+    .subject-inputs, .time-table-section { display: flex; flex-wrap: wrap; gap: 10px; }
+    .timetable { border-collapse: collapse; width: 100%; margin-top: 20px; }
+    .timetable th, .timetable td { border: 1px solid #000; padding: 10px; text-align: center; min-width: 80px; }
+    .draggable { cursor: grab; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>School Timetable Generator</h2>
+    <label>Number of Classes: <input type="number" id="classCount" min="1"></label>
+    <label>Break Time: <input type="time" id="breakTime"></label>
+    <label>Lunch Time: <input type="time" id="lunchTime"></label>
+
+    <div>
+      <h3>Enter up to 12 Subjects and their duration (minutes)</h3>
+      <div id="subjectInputs" class="subject-inputs"></div>
+      <button onclick="addSubjectField()">Add Subject</button>
+    </div>
+
+    <button onclick="generateTimetable()">Generate Timetable</button>
+    <div id="timetables" class="time-table-section"></div>
+    <button onclick="downloadTables()">Download All Timetables</button>
+  </div>
+
+  <script>
+    let subjects = [];
+    let subjectCount = 0;
+
+    function addSubjectField() {
+      if (subjectCount >= 12) return alert('Maximum 12 subjects allowed.');
+      const div = document.createElement('div');
+      div.innerHTML = `<input type="text" placeholder="Subject Name" class="subject"> <input type="number" placeholder="Duration (min)" class="duration">`;
+      document.getElementById('subjectInputs').appendChild(div);
+      subjectCount++;
+    }
+
+    function generateTimetable() {
+      const classCount = parseInt(document.getElementById('classCount').value);
+      const breakTime = document.getElementById('breakTime').value;
+      const lunchTime = document.getElementById('lunchTime').value;
+      if (!classCount || classCount <= 0) return alert("Please enter number of classes");
+
+      const subjectElems = document.querySelectorAll('.subject');
+      const durationElems = document.querySelectorAll('.duration');
+      subjects = [];
+      for (let i = 0; i < subjectElems.length; i++) {
+        const name = subjectElems[i].value;
+        const dur = parseInt(durationElems[i].value);
+        if (name && dur) subjects.push({ name, dur });
+      }
+
+      if (subjects.length < 1) return alert("Enter at least one subject.");
+
+      const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+      document.getElementById('timetables').innerHTML = '';
+
+      for (let c = 1; c <= classCount; c++) {
+        const table = document.createElement('table');
+        table.className = 'timetable';
+        const header = `<tr><th>Day</th><th colspan="${subjects.length}">Class ${c}</th></tr>`;
+        table.innerHTML += header;
+
+        days.forEach(day => {
+          const row = document.createElement('tr');
+          row.innerHTML = `<td>${day}</td>`;
+          let shuffled = subjects.map(s => ({ ...s }));
+          shuffled.sort(() => Math.random() - 0.5);
+          shuffled.forEach(sub => {
+            const cell = document.createElement('td');
+            cell.textContent = sub.name;
+            cell.className = 'draggable';
+            cell.draggable = true;
+            addDragAndDrop(cell);
+            row.appendChild(cell);
+          });
+          table.appendChild(row);
+        });
+        document.getElementById('timetables').appendChild(table);
+      }
+    }
+
+    function addDragAndDrop(cell) {
+      cell.addEventListener('dragstart', e => {
+        e.dataTransfer.setData('text/plain', e.target.textContent);
+        e.dataTransfer.effectAllowed = 'move';
+      });
+      cell.addEventListener('dragover', e => {
+        e.preventDefault();
+        e.dataTransfer.dropEffect = 'move';
+      });
+      cell.addEventListener('drop', e => {
+        e.preventDefault();
+        const fromText = e.dataTransfer.getData('text/plain');
+        const toText = e.target.textContent;
+        e.target.textContent = fromText;
+        const from = document.querySelector(`.draggable:contains('${fromText}')`);
+        if (from) from.textContent = toText;
+      });
+    }
+
+    function downloadTables() {
+      const tables = document.querySelectorAll('table');
+      tables.forEach((table, index) => {
+        const html = `<!DOCTYPE html><html><head><meta charset='UTF-8'><title>Class ${index + 1}</title></head><body>${table.outerHTML}</body></html>`;
+        const blob = new Blob([html], { type: 'text/html' });
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = `Class_${index + 1}_Timetable.html`;
+        a.click();
+      });
+    }
+  </script>
+</body>
+</html>
