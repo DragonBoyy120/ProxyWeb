@@ -354,3 +354,43 @@
       color: cyan;
       text-decoration: underline;
   }
+
+
+
+
+  /* Remove gradient effect from h1 */
+h1 {
+    font-weight: 900;
+    font-size: 3.4rem;
+    letter-spacing: 3px;
+    margin: 0 auto;
+    max-width: 100%;
+    line-height: 1.1;
+    display: flex;
+    justify-content: center;
+    user-select: none;
+    color: white; /* Set text color to white */
+    text-shadow: 0 0 7px #0ff, 0 0 15px #0ff70a; /* Optional shadow for better visibility */
+}
+
+/* Hamburger icon with gradient lines */
+.hamburger {
+    width: 28px;
+    height: 22px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    cursor: pointer;
+}
+.hamburger span {
+    display: block;
+    height: 3px;
+    border-radius: 3px;
+    background: linear-gradient(90deg, #00f0ff, #00cfff, #00e2ca, #00ffd5);
+    box-shadow: 0 0 8px cyan;
+    transition: background 0.5s ease, box-shadow 0.5s ease;
+}
+.hamburger:hover span {
+    background: linear-gradient(90deg, #00ff77, #00ffaa, #00cc88, #00ff99);
+    box-shadow: 0 0 15px #00ffcc;
+}
