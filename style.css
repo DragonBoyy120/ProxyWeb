@@ -1,296 +1,264 @@
-  /* Reset and base */
-* {
-    box-sizing: border-box;
-    transition: all 0.3s ease;
-}
-
-body {
-    margin: 0;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: linear-gradient(-45deg, #0f2027, #203a43, #2c5364, #1f4037);
-    background-size: 400% 400%;
-    animation: bgGradient 15s ease infinite;
-    color: white;
-    overflow-x: hidden;
-    height: 100vh;
-    max-width: 100vw;
-}
-
-/* Background gradient animation */
-@keyframes bgGradient {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
-}
-
-/* Header top bar */
-header {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 50px;
-    background: rgba(0, 0, 0, 0.75);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 15px;
-    z-index: 1001;
-    box-shadow: 0 0 15px cyan;
-}
-
-/* Logo styles */
-.logo {
-    display: block; /* Makes the image a block element */
-    max-width: 100px; /* Set a maximum width for the logo */
-    height: auto; /* Maintain aspect ratio */
-    user-select: none;
-}
-
-/* Hamburger icon with gradient lines */
-.hamburger {
-    width: 28px;
-    height: 22px;
-    display: none; /* Hidden by default, shown on mobile */
-    flex-direction: column;
-    justify-content: space-between;
-    cursor: pointer;
-    z-index: 1100;
-}
-
-.hamburger span {
-    display: block;
-    height: 3px;
-    border-radius: 3px;
-    background: linear-gradient(90deg, #00f0ff, #00cfff, #00e2ca, #00ffd5);
-    box-shadow: 0 0 8px cyan;
-    transition: background 0.5s ease, box-shadow 0.5s ease;
-}
-
-.hamburger:hover span {
-    background: linear-gradient(90deg, #00ff77, #00ffaa, #00cc88, #00ff99);
-    box-shadow: 0 0 15px #00ffcc;
-}
-
-/* Side menu container */
-nav.side-menu {
-    position: fixed;
-    top: 50px;
-    left: -270px; /* Hidden by default */
-    width: 270px;
-    height: calc(100% - 50px);
-    background: linear-gradient(135deg, #0a0f12, #12343b, #0a191d);
-    color: white;
-    padding: 15px;
-    box-shadow: 3px 0 15px rgba(0, 255, 255, 0.7);
-    transition: left 0.35s cubic-bezier(.77, 0, .175, 1);
-    overflow-y: auto;
-    z-index: 1000;
-    border-radius: 0 15px 15px 0;
-    backdrop-filter: saturate(180%) blur(12px);
-}
-
-nav.side-menu.open {
-    left: 0;
-}
-
-nav.side-menu a,
-nav.side-menu button {
-    display: block;
-    text-decoration: none;
-    color: #80ffff;
-    padding: 14px 14px;
-    font-weight: 700;
-    border: none;
-    background: transparent;
-    width: 100%;
-    text-align: left;
-    cursor: pointer;
-    font-size: 16px;
-    border-radius: 8px;
-    user-select: none;
-    box-shadow: 0 0 7px transparent;
-    transition: color 0.3s ease, box-shadow 0.3s ease;
-}
-
-nav.side-menu a:hover,
-nav.side-menu button:hover {
-    color: #00fff9;
-    box-shadow: 0 0 10px #00fff9, 0 0 20px #00fff9b0;
-    background: rgba(0, 255, 255 , 0.1);
-}
-
-/* Dropdown inside side menu */
-.dropdown-content {
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.4s ease, opacity 0.35s ease;
-    padding-left: 14px;
-    opacity: 0;
-}
-
-.dropdown-content.open {
-    max-height: 420px;
-    opacity: 1;
-    margin-top: 8px;
-}
-
-.dropdown-content a {
-    padding-left: 26px;
-    font-weight: 600;
-    font-size: 15px;
-    color: #70faff;
-    text-shadow: 0 0 3px #0ff;
-    user-select: none;
-    border-radius: 6px;
-    margin-bottom: 6px;
-    box-shadow: 0 0 8px transparent;
-    transition: box-shadow 0.25s ease;
-}
-
-.dropdown-content a:hover {
-    color: #00f4ff;
-    box-shadow: 0 0 15px cyan, 0 0 25px #00f4ffc0;
-    background: rgba(0, 255, 255, 0.12);
-}
-
-/* Developer box with glassmorphism */
-.developer-box {
-    background: rgba(0, 255, 255, 0.15);
-    box-shadow: 0 8px 32px 0 rgba(0, 255, 255, 0.37);
-    border-radius: 20px;
-    padding: 20px 15px;
-    margin-top: 15px;
-    text-align: center;
-    color: #dffeff;
-    backdrop-filter: blur(8.5px);
-    -webkit-backdrop-filter: blur(8.5px);
-    border: 1px solid rgba(0,255,255,0.3);
-}
-
-.developer-box img {
-    width: 110px;
-    height: 110px;
-    object-fit: cover;
-    border-radius: 50%;
-    border: 4px solid #00fffacc;
-    margin-bottom: 15px;
-    box-shadow: 0 0 15px #00fffacc;
-    transition: transform 0.3s ease;
-}
-
-.developer-box img:hover {
-    transform: scale(1.1);
-    box-shadow: 0 0 25px cyan;
-}
-
-.developer-box .dev-info {
-    font-size: 15px;
-    line-height: 1.5;
-    color: #aaffffdd;
-    user-select: none;
-    letter-spacing: 0.02em;
-}
-
-/* Main content area */
-main {
-    padding: 90px 20px 20px 20px;
-    text-align: center;
-    user-select: none;
-    min-height: calc(100vh - 90px);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
-
-/* Drop area styling */
-.drop-area {
-    border: 2px dashed cyan;
-    border-radius: 10px;
-    padding: 20px;
-    width: 300px;
-    margin: 20px auto;
-    text-align: center;
-    transition: background 0.3s ease;
-}
-
-.drop-area:hover {
-    background: rgba(0, 255, 255, 0.1);
-}
-
-.process-button {
-    background: cyan;
-    color: black;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
-    cursor: pointer;
-    margin-top: 20px;
-}
-
-.process-button:disabled {
-    background: gray;
-    cursor: not-allowed;
-}
-
-.download-link {
-    display: inline-block;
-    margin-top: 20px;
-    color: cyan;
-    text-decoration: underline;
-}
-
-/* Responsive adjustments */
-@media (max-width: 1024px) {
-    nav.side-menu {
-        width: 220px;
-    }
-    main {
-        padding-left: 20px;
-        padding-right: 20px;
-    }
-}
-
-@media (max-width: 768px) {
+  /* Header top bar */
     header {
-        padding: 0 10px;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 50px;
+      background: rgba(0,0,0,0.75);
+      display: flex;
+      align-items: center;
+      padding: 0 15px;
+      z-index: 1001;
+      box-shadow: 0 0 15px cyan;
     }
 
+    .logo {
+      display: block; /* Makes the image a block element */
+      margin: 0 auto; /* Centers the image horizontally */
+      max-width: 100px; /* Set a maximum width for the logo */
+      height: auto; /* Maintain aspect ratio */
+      margin-bottom: 5px; /* Space between logo and heading */
+  }
+
+    
+    /* Hamburger icon with gradient lines */
     .hamburger {
-        display: flex;
+      width: 28px;
+      height: 22px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      cursor: pointer;
     }
-
+    .hamburger span {
+      display: block;
+      height: 3px;
+      border-radius: 3px;
+      background: linear-gradient(90deg, #00f0ff, #00cfff, #00e2ca, #00ffd5);
+      box-shadow: 0 0 8px cyan;
+      transition: background 0.5s ease, box-shadow 0.5s ease;
+    }
+    .hamburger:hover span {
+      background: linear-gradient(90deg, #00ff77, #00ffaa, #00cc88, #00ff99);
+      box-shadow: 0 0 15px #00ffcc;
+    }
+    
+    /* Side menu container */
     nav.side-menu {
-        width: 80vw;
-        left: -100vw;
-        transition: left 0.35s ease;
+      position: fixed;
+      top: 50px;
+      left: -270px;
+      width: 270px;
+      height: calc(100% - 50px);
+      background: linear-gradient(135deg, #0a0f12, #12343b, #0a191d);
+      color: white;
+      padding: 15px;
+      box-shadow: 3px 0 15px rgba(0,255,255,0.7);
+      transition: left 0.35s cubic-bezier(.77,0,.175,1);
+      overflow-y: auto;
+      z-index: 1000;
+      border-radius: 0 15px 15px 0;
+      backdrop-filter: saturate(180%) blur(12px);
     }
-
     nav.side-menu.open {
-        left: 0;
+      left: 0;
     }
 
+    .small-text {
+      font-size: 10px; /* Small font size */
+      color: #666; /* Gray color for the text */
+      position: relative; /* Position relative to the parent */
+      top: -10px; /* Adjust vertical position */
+      right: 0; /* Align to the right */
+      text-align: right; /* Align text to the right */
+  }
+
+  main {
+      position: relative; /* Position relative for absolute positioning of small text */
+      text-align: center; /* Center the main content */
+  }
+    
+    nav.side-menu a,
+    nav.side-menu button {
+      display: block;
+      text-decoration: none;
+      color: #80ffff;
+      padding: 14px 14px;
+      font-weight: 700;
+      border: none;
+      background: transparent;
+      width: 100%;
+      text-align: left;
+      cursor: pointer;
+      font-size: 16px;
+      border-radius: 8px;
+      user-select: none;
+      box-shadow: 0 0 7px transparent;
+      transition: color 0.3s ease, box-shadow 0.3s ease;
+    }
+    nav.side-menu a:hover,
+    nav.side-menu button:hover {
+      color: #00fff9;
+      box-shadow: 0 0 10px #00fff9, 0 0 20px #00fff9b0;
+      background: rgba(0, 255, 255, 0.1);
+    }
+    
+    nav.side-menu hr {
+      border: none;
+      border-top: 1px solid #004d4d;
+      margin: 15px 0;
+    }
+    
+    /* Developer box with glassmorphism */
+    .developer-box {
+      background: rgba(0, 255, 255, 0.15);
+      box-shadow: 0 8px 32px 0 rgba(0, 255, 255, 0.37);
+      border-radius: 20px;
+      padding: 20px 15px;
+      margin-top: 15px;
+      text-align: center;
+      color: #dffeff;
+      backdrop-filter: blur(8.5px);
+      -webkit-backdrop-filter: blur(8.5px);
+      border: 1px solid rgba(0,255,255,0.3);
+    }
+    .developer-box img {
+      width: 110px;
+      height: 110px;
+      object-fit: cover;
+      border-radius: 50%;
+      border: 4px solid #00fffacc;
+      margin-bottom: 15px;
+      box-shadow: 0 0 15px #00fffacc;
+      transition: transform 0.3s ease;
+    }
+    .developer-box img:hover {
+      transform: scale(1.1);
+      box-shadow: 0 0 25px cyan;
+    }
+    .developer-box .dev-info {
+      font-size: 15px;
+      line-height: 1.5;
+      color: #aaffffdd;
+      user-select: none;
+      letter-spacing: 0.02em;
+    }
+    
+    /* Dropdown inside side menu */
+    .dropdown-content {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s ease, opacity 0.35s ease;
+      padding-left: 14px;
+      opacity: 0;
+    }
+    .dropdown-content.open {
+      max-height: 420px;
+      opacity: 1;
+      margin-top: 8px;
+    }
+    .dropdown-content a {
+      padding-left: 26px;
+      font-weight: 600;
+      font-size: 15px;
+      color: #70faff;
+      text-shadow: 0 0 3px #0ff;
+      user-select: none;
+      border-radius: 6px;
+      margin-bottom: 6px;
+      box-shadow: 0 0 8px transparent;
+      transition: box-shadow 0.25s ease;
+    }
+    .dropdown-content a:hover {
+      color: #00f4ff;
+      box-shadow: 0 0 15px cyan, 0 0 25px #00f4ffc0;
+      background: rgba(0, 255, 255, 0.12);
+    }
+    
+    /* Main content area */
     main {
-        padding: 90px 15px 20px 15px;
-        margin-left: 0;
+      padding: 90px 20px 20px 20px;
+      text-align: center;
+      user-select: none;
+      min-height: calc(100vh - 90px);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    
+    /* Heading style with multi color gradient animated text */
+    h1 {
+      font-weight: 900;
+      font-size: 3.4rem;
+      letter-spacing: 3px;
+      margin: 0 auto;
+      max-width: 100%;
+      line-height: 1.1;
+      display: flex;
+      justify-content: center;
+      user-select: none;
+      text-shadow:
+        0 0 7px #0ff,
+        0 0 15px #0ff70a,
+        0 0 30px #00f,
+        0 0 40px #0ff,
+        0 0 70px cyan;
+      transition: color 1.5s ease;
+    }
+    .white-text {
+      color: white;
+      margin-right: 10px;
+      background: linear-gradient(45deg, #ffffff, #a0eaff, #ffffff);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: whiteGlow 3s ease-in-out infinite;
+    }
+    .cyan-text {
+      color: cyan;
+      font-weight: 700;
+      background: linear-gradient(45deg, #00fff4, #00b8ff, #00fff4);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: cyanGlow 3s ease-in-out infinite;
+    }
+    
+    /* Glow Animations for heading */
+    @keyframes whiteGlow {
+      0%, 100% {
+        text-shadow:
+          0 0 5px #aaf, 0 0 8px #88f, 0 0 15px #ccf;
+      }
+      50% {
+        text-shadow:
+          0 0 10px #fff, 0 0 15px #cce, 0 0 30px #eef;
+      }
+    }
+    
+    @keyframes cyanGlow {
+      0%, 100% {
+        text-shadow:
+          0 0 7px #00fff4, 0 0 10px #00e1ff, 0 0 20px #00ffff;
+      }
+      50% {
+        text-shadow:
+          0 0 15px #00ccff, 0 0 25px #00e7ff, 0 0 40px cyan;
+      }
     }
 
-    .drop-area {
-        width: 90%;
-    }
-    h1 {
+    
+    
+    /* Responsive adjustments for mobile */
+    @media (max-width: 400px) {
+      h1 {
         font-size: 2.5rem;
+      }
+      nav.side-menu {
+        width: 80vw;
+      }
     }
-}
-
-@media (max-width: 400px) {
-    h1 {
-        font-size: 2rem;
-    }
-}
-
-
     /* Reset and base */
   * {
       box-sizing: border-box;
